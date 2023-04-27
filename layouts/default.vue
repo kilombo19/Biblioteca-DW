@@ -76,11 +76,13 @@ export default {
           title: 'Welcome',
           to: '/',
         },
+
         {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
           to: '/inspire',
         },
+
         {
           icon: 'mdi-account-plus',
           title: 'Coonsultar Historial de Reservas',
@@ -96,7 +98,25 @@ export default {
         {
           icon: 'mdi-account',
           title: 'Cuentas creadas',
-          to: 'accounts',
+          to: '/accounts',
+        },
+
+        {
+          icon: 'mdi-account',
+          title: 'Reserva de Libros',
+          to: '/reserva',
+        },
+
+        {
+          icon: 'mdi-account',
+          title: 'Base de datos',
+          to: '/baseDeDatosLibros',
+        },
+
+        {
+          icon: 'mdi-account',
+          title: 'Logueo',
+          to: '/loguin',
         },
       ],
       miniVariant: false,
@@ -104,6 +124,31 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js',
     }
+  },
+
+  methods: {
+    closeSesion() {
+      this.$router.push('/')
+    },
+    loadAccount() {
+      const account_str = localStorage.getItem('ACCOUNT')
+      if (account_str) {
+        try {
+          const account = JSON.parse(account_str)
+          this.fullname = `${account.firstname} ${account.lastname}`
+          //TODO: Validando el rol pendiente desde el API
+          if (account.role == 0) {
+            this.$router.push('/students/home')
+          } else {
+            this.$router.push('/home')
+          }
+        } catch (error) {
+          this.$router.push('/')
+        }
+      } else {
+        this.$router.push('/')
+      }
+    },
   },
 }
 </script>

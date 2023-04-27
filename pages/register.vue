@@ -1,8 +1,15 @@
 <template>
-  <v-container
-    fill-height
-    style="border: 1px solid #d92525; background: #d92525"
-  >
+  <v-container fill-height style="border: 1px solid #d92525; background: #d92525">
+    <v-row justify="center">
+      <v-col cols="10">
+        <v-card>
+          <v-card-title style="align-content: center">
+            <h1 >BIBLIOTECA VIRTUAL - ENSEÑA A UN BURRO</h1>
+          </v-card-title>
+        </v-card>  
+      </v-col>
+
+    </v-row>
     <v-row justify="center">
       <v-col cols="10">
         <v-card>
@@ -10,7 +17,7 @@
             <h1>{{title}}</h1>
           </v-card-title>
           <v-card-subtitle>
-            {{ subtitle }}
+            <span v-html="subtitle"></span>
           </v-card-subtitle>
           <v-card-text>
             <v-form>
@@ -27,17 +34,17 @@
                   <v-text-field label="Correo" type="email" v-model="account.email" :rules="[rules.required, ...emailRules]"> </v-text-field>
                 </v-col>
                 <v-col>
-                  <v-text-field label="Contraseña" type="password" v-model="account.pass" :rules="[rules.required, ...passwordRules]"
+                  <v-text-field label="Contraseña" v-model="account.pass" :rules="[rules.required, ...passwordRules]"
                    :type="showPassword ? 'text' : 'password'" required
                    :append-icon="showPassword?'mdi-eye-off' : 'mdi-eye'"
-                   @click:append="$event => changeVisibilityPassword()">
+                   @click:append="changeVisibilityPassword()">
                   </v-text-field>
                 </v-col>
               </v-row>
 
               <v-row justify="start">
                 <v-col cols="6">
-                  <v-checkbox label="Aceptar Terminos y Condicionaes" v-model="account.polity" :rules="[rules.required]"> </v-checkbox>
+                  <v-checkbox label="Aceptar Terminos y Condicionaes" v-model="account.polity" required :rules="[rules.required]"> </v-checkbox>
                 </v-col>
               </v-row>
               <v-row justify="space-between">
@@ -45,7 +52,7 @@
                   <v-btn color="#d92525" dark class="text-none" @click="createAccount"> Crear Cuenta</v-btn>
                 </v-col>
                 <v-col>
-                  <v-btn color="secondary" class="text-none" to="/">Cancelar</v-btn>
+                  <v-btn color="secondary" class="text-none" to="/loguin">Cancelar</v-btn>
                 </v-col>
               </v-row>
             </v-form>
@@ -58,12 +65,13 @@
 
 <script lang="ts">
 export default {
-  layout: 'blank',data() {
-  return {
+  layout: 'blank',
+  data() {
+   return {
     showPassword: false,
     formAccount: null,
     title: 'Crear cuenta',
-    subtitle: 'Crea tu gratuitamente hasta el 30 de julio de 2023',
+    subtitle: 'Crea tu cuenta para poder reservar libros',
     account: {
       firstname: '',
       lastname: '',
@@ -73,11 +81,11 @@ export default {
     },
     // Reglas generales
     rules: {
-      required: (v: string | null) => !!v || 'Este campo es obligatorio.',
+      required: (v: String | null) => !!v || 'Este campo es obligatorio.',
     },
     // Reglas especificas
     nameRules: [
-      (v: string | null) =>
+      (v: String | null) =>
         (v && v.length <= 20) ||
         'El nombre debe contener máximo 20 caracteres ',
     ],
