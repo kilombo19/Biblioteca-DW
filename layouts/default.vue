@@ -92,6 +92,12 @@ export default {
           title: 'Registro usuario',
           to: '/register',
         },
+
+        {
+          icon: 'mdi-account',
+          title: 'Cuentas creadas',
+          to: 'accounts',
+        },
       ],
       miniVariant: false,
       right: true,
